@@ -38,7 +38,7 @@ curl -H "Content-Type: application/json" -X POST -d
 [Recurrence]
 3. Start Date/Time, Stop Period
     Every Jan, Dec
-    Every Mon, Wed, and Fri
+    Every Mon, and Fri
     9:00 start.
     Then 2 hr later stop.
 
@@ -46,7 +46,7 @@ curl -H "Content-Type: application/json" -X POST -d
 '{"schedule_type":"recurrence",
 "month" : ['Jan', 'Dec'],
 "start_time": "9:00",
-"schedule_days" : ['Mon', 'Wed', 'Fri']
+"schedule_days" : ['Mon', 'Fri']
 "stop_type" : "period",
 "lifetime_quantity" : 2,
 "lifetime_unit" : "hour"
