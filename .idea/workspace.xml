@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8c2003c-0350-4d7f-aa52-9ed3c2afcfb1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/REST_example.txt" afterPath="$PROJECT_DIR$/REST_example.txt" />
     </list>
     <ignored path="scheduler-restful.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,8 +49,8 @@
       <file leaf-file-name="REST_example.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/REST_example.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+            <state relative-caret-position="120">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -66,6 +66,7 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/One-Time" />
+        <option value="$PROJECT_DIR$/REST_example.txt" />
       </list>
     </option>
   </component>
@@ -456,8 +457,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/REST_example.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+        <state relative-caret-position="120">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
       </provider>
