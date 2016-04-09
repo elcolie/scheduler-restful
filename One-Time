@@ -1,3 +1,120 @@
 Curl example in terminal
 Ref : http://stackoverflow.com/questions/7172784/how-to-post-json-data-with-curl-from-terminal-commandline-to-test-spring-rest
-curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:5000/one_time
+
+[OneTime scheduler]
+Time use ISO8601 with explicit timezone
+curl in one line
+
+1. Start Date/Time, Stop Date/Time
+    3 Jan 2016 9:00 start
+    4 Jan 2016 9:00 stop
+    type : date_time
+
+curl -H "Content-Type: application/json" -X POST -d
+'{"schedule_type":"one_time",
+"start_datetime":"2016-01-03T09:00:00+07:00",
+"stop_datetime":"2016-01-04T09:00:00+70:00",
+"stop_type" : "date_time"
+}' http://localhost:5000/one_time
+
+
+2. Start Date/Time, Stop Period
+    5 Jan 2016 9:00 start
+    5 hr later      stop
+    type : period
+
+curl -H "Content-Type: application/json" -X POST -d
+'{"schedule_type":"one_time",
+"start_datetime":"2016-01-05T09:00:00+07:00",
+"stop_datetime":"",
+"stop_type" : "period",
+"lifetime_quantity": 5,
+"lifetime_unit" : "hour"
+}' http://localhost:5000/one_time
+
+* lifetime_unit = { minutes, hours, days, months, years, forever}. Select just one.
+
+
+[Recurrence]
+3. Start Date/Time, Stop Period
+    Every Jan, Dec
+    Every Mon, Wed, and Fri
+    9:00 start.
+    Then 2 hr later stop.
+
+curl -H "Content-Type: application/json" -X POST -d
+'{"schedule_type":"recurrence",
+"month" : ['Jan', 'Dec'],
+"start_time": "9:00",
+"schedule_days" : ['Mon', 'Wed', 'Fri']
+"stop_type" : "period",
+"lifetime_quantity" : 2,
+"lifetime_unit" : "hour"
+}' http://localhost:5000/recurrence
+
+* Use Mon to Sun like this because django create easy to query structure.
+* lifetime_unit see (2)
+* How to implement "schedule_days" field in Django?
+
+4. Start Date/Time, Stop Period
+    Every Jan, Dec
+    Every 1, 3, 5, and 7
+    17:00 start
+    Then 1 day later stop.
+
+curl -H "Content-Type: application/json" -X POST -d
+'{"schedule_type":"recurrence",
+"month" : ['Jan', 'Dec'],
+"start_time": "17:00"
+"schedule_days": [1, 3, 5, 7]
+"stop_type" : "period",
+"lifetime_quantity" : 1,
+"lifetime_unit" : "day"
+}' http://localhost:5000/recurrence
+
+
+[Specific Date/Time]
+5. Start Date/Time by certain Date/Time
+    Every month
+    first config = (3rd 8:00, 5th 19:00)
+    second config = (12th 3:00, 15th : 20:00)
+
+    * parentheses = (date time start, date time stop)
+
+curl -H "Content-Type: application/json" -X POST -d
+'{"schedule_type":"specific",
+"schedule_days": [{ start_date_time : [3, "8:00"],
+                    stop_date_time : [5, "19:00"]},
+                   { start_date_time : [12, "3:00"],
+                     stop_date_time : [15, "20:00"]}],
+}' http://localhost:5000/specific
+
+
+6. Start Date/Time by period
+    Every month
+    first config = (1st 6:00, 30 min)
+    second config = (3rd 8:00, 3 hr)
+    third config = (8th 22:00, 2 days)
+
+    * parentheses = (date time start, stopping period)
+
+curl -H "Content-Type: application/json" -X POST -d
+'{"schedule_type":"specific",
+"schedule_days": [{ start_date: 1 ,
+                    start_time : "6:00",
+                    lifetime_quantity : 30,
+                    lifetime_unit : "minutes"},
+                    {start_date : 3,
+                     start_time : "8:00"
+                    lifetime_quantity : 3,
+                    lifetime_unit : "hours"},
+                    {start_date : 8,
+                     start_time : "22:00"
+                    lifetime_quantity : 2,
+                    lifetime_unit : "days"}]
+}' http://localhost:5000/specific
+
+
+
+
+
