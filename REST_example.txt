@@ -14,7 +14,9 @@ curl -H "Content-Type: application/json" -X POST -d
 '{"schedule_type":"one_time",
 "start_datetime":"2016-01-03T09:00:00+07:00",
 "stop_datetime":"2016-01-04T09:00:00+70:00",
-"stop_type" : "date_time"
+"stop_type" : "date_time",
+"current_bandwidth" : 5,
+"new_bandwidth" : 10
 }' http://localhost:5000/one_time
 
 
@@ -29,7 +31,9 @@ curl -H "Content-Type: application/json" -X POST -d
 "stop_datetime":"",
 "stop_type" : "period",
 "lifetime_quantity": 5,
-"lifetime_unit" : "hour"
+"lifetime_unit" : "hour",
+"current_bandwidth" : 5,
+"new_bandwidth" : 10
 }' http://localhost:5000/one_time
 
 * lifetime_unit = { minutes, hours, days, months, years, forever}. Select just one.
@@ -44,12 +48,14 @@ curl -H "Content-Type: application/json" -X POST -d
 
 curl -H "Content-Type: application/json" -X POST -d
 '{"schedule_type":"recurrence",
-"month" : ['Jan', 'Dec'],
+"months" : ['Jan', 'Dec'],
 "start_time": "9:00",
 "schedule_days" : ['Mon', 'Fri']
 "stop_type" : "period",
 "lifetime_quantity" : 2,
-"lifetime_unit" : "hour"
+"lifetime_unit" : "hour",
+"current_bandwidth" : 5,
+"new_bandwidth" : 10
 }' http://localhost:5000/recurrence
 
 * Use Mon to Sun like this because django create easy to query structure.
@@ -64,18 +70,20 @@ curl -H "Content-Type: application/json" -X POST -d
 
 curl -H "Content-Type: application/json" -X POST -d
 '{"schedule_type":"recurrence",
-"month" : ['Jan', 'Dec'],
+"months" : ['Jan', 'Dec'],
 "start_time": "17:00"
 "schedule_days": [1, 3, 5, 7]
 "stop_type" : "period",
 "lifetime_quantity" : 1,
-"lifetime_unit" : "day"
+"lifetime_unit" : "day",
+"current_bandwidth" : 5,
+"new_bandwidth" : 10
 }' http://localhost:5000/recurrence
 
 
 [Specific Date/Time]
 5. Start Date/Time by certain Date/Time
-    Every April
+    Every April, June
     config = (3rd 8:00, 5th 19:00)
 
     * parentheses = (date time start, date time stop)
@@ -84,36 +92,39 @@ curl -H "Content-Type: application/json" -X POST -d
 curl -H "Content-Type: application/json" -X POST -d
 '{"schedule_type":"specific",
 "category" : "date_time",
-"month" : ['Apr'],
+"months" : ['Apr', 'June'],
 "schedule_days": [{ start_date_time : [3, "8:00"],
                     stop_date_time : [5, "19:00"]}],
+"current_bandwidth" : 5,
+"new_bandwidth" : 10
 }' http://localhost:5000/specific
 
 
 6. Start Date/Time by period
-    Every April
-    config = (1st 6:00, 30 min)
+    Every April, June
+    30 minutes for these job
+    first config = (1st 6:00)
+    second config = (3rd 8:00)
+    third config = (8th 22:00)
 
     * parentheses = (date time start, stopping period)
-    * multiple specific Date/Time period by adding more record
+    * period must be identical for systematic process
 
 curl -H "Content-Type: application/json" -X POST -d
 '{"schedule_type":"specific",
 "category" : "period",
+"months" : ['Apr', 'Jun'],
+"lifetime_quantity" : 30,
+"lifetime_unit" : "minutes",
 "schedule_days": [{ start_date: 1 ,
-                    start_time : "6:00",
-                    lifetime_quantity : 30,
-                    lifetime_unit : "minutes"},
+                    start_time : "6:00"},
                     {start_date : 3,
-                     start_time : "8:00"
-                    lifetime_quantity : 3,
-                    lifetime_unit : "hours"},
+                     start_time : "8:00"},
                     {start_date : 8,
-                     start_time : "22:00"
-                    lifetime_quantity : 2,
-                    lifetime_unit : "days"}]
+                     start_time : "22:00"}],
+"current_bandwidth" : 5,
+"new_bandwidth" : 10
 }' http://localhost:5000/specific
-
 
 
 
